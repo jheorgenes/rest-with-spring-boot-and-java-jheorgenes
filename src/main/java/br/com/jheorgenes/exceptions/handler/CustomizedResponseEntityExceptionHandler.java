@@ -11,11 +11,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.jheorgenes.exceptions.ExceptionResponse;
+import br.com.jheorgenes.exceptions.UnsupportedMathOperationException;
 
 @ControllerAdvice
 @RestController
-public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 	
+	/*Exception mais genérica (Status code 500) */
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request){
 		ExceptionResponse exceptionResponse = new ExceptionResponse(
@@ -26,7 +28,7 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@ExceptionHandler(UnsupportedOperationException.class)
+	@ExceptionHandler(UnsupportedMathOperationException.class)
 	public final ResponseEntity<ExceptionResponse> handleDadRequestExceptions(Exception ex, WebRequest request){
 		ExceptionResponse exceptionResponse = new ExceptionResponse(
 			new Date(), 
